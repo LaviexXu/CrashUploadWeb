@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HeyBug</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highcharts/5.0.14/highcharts.js"></script>
+    <script src="https://cdn.bootcss.com/knockout/3.4.2/knockout-min.js"></script>
+    <script src="highchartsConfig.js"></script>
+    <script src="crashDataViewModel.js"></script>
+    <style>
+        select {
+            min-width: 140px;
+            max-width: 45%;
+            font-size: 14px;
+            padding: 12px 15px;
+            margin: 0 6px;
+        }
+        table{
+            background: transparent;
+            word-break: break-all;
+            border-collapse: collapse;
+            width: 970px;
+            border: solid 1px #e5e5e5;
+        }
+
+        .solid-select {
+            border: solid 1px #dcdcdc;
+            color: #535353;
+            box-shadow: none;
+            line-height: 20px;
+            background: transparent url("arrow-down.png") 90% center no-repeat;
+            -webkit-appearance: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .chart-filters {
+            padding: 30px 0;
+            font-size: 0;
+        }
+
+        .tab-wrapper {
+            border-bottom: 1px solid #e5e5e5;
+            font-size: 0;
+        }
+
+        .list-unstyled {
+            padding: 0;
+            list-style: none;
+        }
+
+        .tab-wrapper li {
+            position: relative;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            padding: 21px 8px;
+            margin: 0 26px;
+        }
+
+        .tab-wrapper ul {
+            margin: 0;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .active {
+            color: #ffa631;
+            font-weight: bold;
+            border-bottom: solid #ffa631;
+        }
+        .filter-results .item{
+            font-size: 16px;
+            padding-bottom: 40px;
+            display: inline-block;
+            margin: 0 40px;
+        }
+        .item b{
+            margin: 10px;
+            font-size: 30px;
+            color: #fa8c35;
+            font-family: "Open sans","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft YaHei",Arial,sans-serif;
+            font-weight: 400;
+        }
+        .highcharts-container{
+            height: 150px;
+            width: 970px;
+            margin: auto;
+        }
+        .issue-list{
+            margin: auto;
+            width: 970px;
+            font-size: 18px;
+        }
+        .lead{
+            margin-bottom: 20px;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+        .table thead th  {
+            background: #ffa631;
+            color: white;
+            border: none;
+            padding: 15px 5px;
+            font-size: medium;
+            text-align: left;
+
+        }
+        .table td{
+            color: #535353;
+            padding: 15px 5px;
+            border-bottom: solid 1px #e5e5e5;
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="tab-wrapper">
+    <div class="container">
+        <ul class="list-unstyled">
+            <li class="active">
+                <span>崩溃分析</span>
+            </li>
+            <li>
+                <span>项目设置</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<section>
+    <div class="text-center chart-filters">
+        <select id="chooseVersion" class="solid-select">
+            <option value="0" selected="selected" label="全部版本">全部版本</option>
+            <option value="1" label="1.1.6">1.1.6</option>
+            <option value="2" label="1.1.7">1.1.7</option>
+            <option value="3" label="1.2.1">1.2.1</option>
+        </select>
+        <select id="chooseBugStatus" class="solid-select">
+            <option value="0" selected="selected" label="状态：未修复">状态：未修复</option>
+            <option value="1" label="状态：已修复">状态：已修复</option>
+            <option value="2" label="状态：全部">状态：全部</option>
+        </select>
+        <select id="chooseTime" class="solid-select">
+            <option value="0" label="最近1小时">最近1小时</option>
+            <option value="1" selected="selected" label="今天">今天</option>
+            <option value="2" label="最近7天">最近7天</option>
+            <option value="3" label="最近30天">最近30天</option>
+        </select>
+    </div>
+    <div class="text-center filter-results">
+            <span class="item">
+                <span>问题数</span>
+                <b>96</b>
+            </span>
+            <span class="item">
+                <span>崩溃次数</span>
+                <b>1345</b>
+            </span>
+            <span class="item">
+                <span>影响设备</span>
+                <b>76</b>
+            </span>
+    </div>
+    <div class="highcharts-container">
+    </div>
+    <div class="issue-list">
+        <p class="lead">
+            错误列表
+            <small>点击崩溃信息珂查看详细数据</small>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>崩溃信息</th>
+                    <th>崩溃版本</th>
+                    <th>崩溃总数</th>
+                    <th>崩溃产生时间</th>
+                    <th>最后一次崩溃时间</th>
+                    <th>影响设备</th>
+                    <th>是否修复</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:crashList">
+                <tr>
+                    <!--id, crashInfo, crashStack, crashVersion, crashNumber,
+                   crashTime, lastCrash, affectedDeviceNum, isFixed-->
+                    <td data-bind="text: id"></td>
+                    <td data-bind="text: crashInfo"></td>
+                    <td data-bind="text: crashVersion"></td>
+                    <td data-bind="text: crashNumber"></td>
+                    <td data-bind="text: crashTime"></td>
+                    <td data-bind="text: lastCrash"></td>
+                    <td data-bind="text: affectedDeviceNum"></td>
+                    <td><input type="checkbox" data-bind="checked: isFixed"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>
