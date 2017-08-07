@@ -10,6 +10,12 @@
     <script src="highchartsConfig.js"></script>
     <script src="crashDataViewModel.js"></script>
     <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            font-family: "Open sans", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft YaHei", Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
         select {
             min-width: 140px;
             max-width: 45%;
@@ -17,7 +23,8 @@
             padding: 12px 15px;
             margin: 0 6px;
         }
-        table{
+
+        table {
             background: transparent;
             word-break: break-all;
             border-collapse: collapse;
@@ -74,35 +81,40 @@
             font-weight: bold;
             border-bottom: solid #ffa631;
         }
-        .filter-results .item{
+
+        .filter-results .item {
             font-size: 16px;
             padding-bottom: 40px;
             display: inline-block;
             margin: 0 40px;
         }
-        .item b{
+
+        .item b {
             margin: 10px;
             font-size: 30px;
             color: #fa8c35;
-            font-family: "Open sans","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft YaHei",Arial,sans-serif;
             font-weight: 400;
         }
-        .highcharts-container{
+
+        .highcharts-container {
             height: 150px;
             width: 970px;
             margin: auto;
         }
-        .issue-list{
+
+        .issue-list {
             margin: auto;
             width: 970px;
             font-size: 18px;
         }
-        .lead{
+
+        .lead {
             margin-bottom: 20px;
             font-weight: 300;
             line-height: 1.4;
         }
-        .table thead th  {
+
+        .table thead th {
             background: #ffa631;
             color: white;
             border: none;
@@ -111,11 +123,79 @@
             text-align: left;
 
         }
-        .table td{
+
+        .table td {
             color: #535353;
             padding: 15px 5px;
             border-bottom: solid 1px #e5e5e5;
 
+        }
+
+        .crash-info {
+            cursor: pointer;
+        }
+
+        .issue-info {
+            height: 100%;
+            width: 100%;
+            z-index: 205;
+            transition: ease height .35s;
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        .cover {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 200;
+            top: 0;
+            left: 0;
+            transition: background-color .25s;
+            background-color: rgba(255, 166, 49, .6);
+        }
+
+        .issue-wrapper {
+            position: relative;
+            height: 100%;
+            background-color: white;
+            z-index: 204;
+            max-width: 90%;
+            width: 800px;
+            margin: 0 auto;
+        }
+        .crash-count {
+            display: inline-block;
+            border-left: solid 1px #e5e5e5;
+            padding: 20px;
+            margin-left: 60px;
+        }
+        .crash-count b{
+            margin: 10px;
+            font-size: 30px;
+            color: #fa8c35;
+            font-weight: 400;
+        }
+        .device-count {
+            display: inline-block;
+            border-left: solid 1px #e5e5e5;
+            padding: 20px;
+            margin-left: 60px;
+            z-index: 204;
+        }
+        .device-count b{
+            margin: 10px;
+            font-size: 30px;
+            color: #fa8c35;
+            font-weight: 400;
+        }
+        .issue-title {
+            background-color: #ffa631;
+            padding: 20px 60px;
+            color: white;
         }
     </style>
 </head>
@@ -159,11 +239,11 @@
                 <span>问题数</span>
                 <b>96</b>
             </span>
-            <span class="item">
+        <span class="item">
                 <span>崩溃次数</span>
                 <b>1345</b>
             </span>
-            <span class="item">
+        <span class="item">
                 <span>影响设备</span>
                 <b>76</b>
             </span>
@@ -177,32 +257,51 @@
         </p>
         <table class="table">
             <thead>
-                <tr>
-                    <th></th>
-                    <th>崩溃信息</th>
-                    <th>崩溃版本</th>
-                    <th>崩溃总数</th>
-                    <th>崩溃产生时间</th>
-                    <th>最后一次崩溃时间</th>
-                    <th>影响设备</th>
-                    <th>是否修复</th>
-                </tr>
+            <tr>
+                <th></th>
+                <th>崩溃信息</th>
+                <th>崩溃版本</th>
+                <th>崩溃总数</th>
+                <th>崩溃产生时间</th>
+                <th>最后一次崩溃时间</th>
+                <th>影响设备</th>
+                <th>是否修复</th>
+            </tr>
             </thead>
             <tbody data-bind="foreach:crashList">
-                <tr>
-                    <!--id, crashInfo, crashStack, crashVersion, crashNumber,
-                   crashTime, lastCrash, affectedDeviceNum, isFixed-->
-                    <td data-bind="text: id"></td>
-                    <td data-bind="text: crashInfo"></td>
-                    <td data-bind="text: crashVersion"></td>
-                    <td data-bind="text: crashNumber"></td>
-                    <td data-bind="text: crashTime"></td>
-                    <td data-bind="text: lastCrash"></td>
-                    <td data-bind="text: affectedDeviceNum"></td>
-                    <td><input type="checkbox" data-bind="checked: isFixed"/></td>
-                </tr>
+            <tr>
+                <!--id, crashInfo, crashStack, crashVersion, crashNumber,
+               crashTime, lastCrash, affectedDeviceNum, isFixed-->
+                <td data-bind="text: id"></td>
+                <td class="crash-info" data-bind="text: crashInfo,click: $parent.getCrashDetails"></td>
+                <td data-bind="text: crashVersion"></td>
+                <td data-bind="text: crashNumber"></td>
+                <td data-bind="text: crashTime"></td>
+                <td data-bind="text: lastCrash"></td>
+                <td data-bind="text: affectedDeviceNum"></td>
+                <td><input type="checkbox" data-bind="checked: isFixed"/></td>
+            </tr>
             </tbody>
         </table>
+    </div>
+    <div class="issue-info">
+        <div class="cover" data-bind="click:issueInfoDisappear"></div>
+        <div class="issue-wrapper">
+            <div class="issue-header">
+                <h3 id="crash-app-version"></h3>
+                <div class="crash-count">
+                    <span>崩溃次数</span><br/>
+                    <b id="crash-count"></b>
+                </div>
+                <div class="device-count">
+                    <span>影响设备</span><br/><b id="device-count"></b>
+                </div>
+            </div>
+            <div class="issue-title">
+                <span id="crash-id"></span>
+                <span id="crash-info"></span>
+            </div>
+        </div>
     </div>
 </section>
 </body>
