@@ -9,195 +9,8 @@
     <script src="https://cdn.bootcss.com/knockout/3.4.2/knockout-min.js"></script>
     <script src="highchartsConfig.js"></script>
     <script src="crashDataViewModel.js"></script>
-    <style>
-        body {
-            -webkit-font-smoothing: antialiased;
-            font-family: "Open sans", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft YaHei", Arial, sans-serif;
-            background-color: #ffffff;
-        }
+    <link rel="stylesheet" type="text/css" href="basicStyle.css"/>
 
-        select {
-            min-width: 140px;
-            max-width: 45%;
-            font-size: 14px;
-            padding: 12px 15px;
-            margin: 0 6px;
-        }
-
-        table {
-            background: transparent;
-            word-break: break-all;
-            border-collapse: collapse;
-            width: 970px;
-            border: solid 1px #e5e5e5;
-        }
-
-        .solid-select {
-            border: solid 1px #dcdcdc;
-            color: #535353;
-            box-shadow: none;
-            line-height: 20px;
-            background: transparent url("arrow-down.png") 90% center no-repeat;
-            -webkit-appearance: none;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .chart-filters {
-            padding: 30px 0;
-            font-size: 0;
-        }
-
-        .tab-wrapper {
-            border-bottom: 1px solid #e5e5e5;
-            font-size: 0;
-        }
-
-        .list-unstyled {
-            padding: 0;
-            list-style: none;
-        }
-
-        .tab-wrapper li {
-            position: relative;
-            cursor: pointer;
-            font-size: 14px;
-            display: inline-block;
-            padding: 21px 8px;
-            margin: 0 26px;
-        }
-
-        .tab-wrapper ul {
-            margin: 0;
-            display: block;
-            width: 100%;
-            text-align: center;
-        }
-
-        .active {
-            color: #ffa631;
-            font-weight: bold;
-            border-bottom: solid #ffa631;
-        }
-
-        .filter-results .item {
-            font-size: 16px;
-            padding-bottom: 40px;
-            display: inline-block;
-            margin: 0 40px;
-        }
-
-        .item b {
-            margin: 10px;
-            font-size: 30px;
-            color: #fa8c35;
-            font-weight: 400;
-        }
-
-        .highcharts-container {
-            height: 150px;
-            width: 970px;
-            margin: auto;
-        }
-
-        .issue-list {
-            margin: auto;
-            width: 970px;
-            font-size: 18px;
-        }
-
-        .lead {
-            margin-bottom: 20px;
-            font-weight: 300;
-            line-height: 1.4;
-        }
-
-        .table thead th {
-            background: #ffa631;
-            color: white;
-            border: none;
-            padding: 15px 5px;
-            font-size: medium;
-            text-align: left;
-
-        }
-
-        .table td {
-            color: #535353;
-            padding: 15px 5px;
-            border-bottom: solid 1px #e5e5e5;
-
-        }
-
-        .crash-info {
-            cursor: pointer;
-        }
-
-        .issue-info {
-            height: 100%;
-            width: 100%;
-            z-index: 205;
-            transition: ease height .35s;
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: none;
-        }
-
-        .cover {
-            height: 100%;
-            width: 100%;
-            position: fixed;
-            z-index: 200;
-            top: 0;
-            left: 0;
-            transition: background-color .25s;
-            background-color: rgba(255, 166, 49, .6);
-        }
-
-        .issue-wrapper {
-            position: relative;
-            height: 100%;
-            background-color: white;
-            z-index: 204;
-            max-width: 90%;
-            width: 800px;
-            margin: 0 auto;
-        }
-        .crash-count {
-            display: inline-block;
-            border-left: solid 1px #e5e5e5;
-            padding: 20px;
-            margin-left: 60px;
-        }
-        .crash-count b{
-            margin: 10px;
-            font-size: 30px;
-            color: #fa8c35;
-            font-weight: 400;
-        }
-        .device-count {
-            display: inline-block;
-            border-left: solid 1px #e5e5e5;
-            padding: 20px;
-            margin-left: 60px;
-            z-index: 204;
-        }
-        .device-count b{
-            margin: 10px;
-            font-size: 30px;
-            color: #fa8c35;
-            font-weight: 400;
-        }
-        .issue-title {
-            background-color: #ffa631;
-            padding: 20px 60px;
-            color: white;
-        }
-    </style>
 </head>
 
 <body>
@@ -300,6 +113,13 @@
             <div class="issue-title">
                 <span id="crash-id"></span>
                 <span id="crash-info"></span>
+            </div>
+            <div class="issue-detail">
+                <p id="issue-stack"></p>
+            </div>
+            <div class="device-distribution">
+                <div id="device-distribution" ></div>
+                <div id="system-distribution" ></div>
             </div>
         </div>
     </div>

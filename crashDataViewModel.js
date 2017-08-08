@@ -17,6 +17,7 @@ function crashDataViewModel() {
         $("#device-count").text(crash.affectedDeviceNum);
         $("#crash-id").text(crash.id);
         $("#crash-info").text(crash.crashInfo);
+        $("#issue-stack").text(crash.crashStack);
     };
     self.issueInfoDisappear=function () {
         $(".issue-info")[0].style.display = "none";

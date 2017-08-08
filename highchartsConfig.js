@@ -47,6 +47,65 @@ $(document).ready(function ($) {
             data: [68, 51, 30, 12, 10, 18, 45, 80, 76, 69, 81, 75, 99, 77, 56, 63, 68, 78, 66, 80, 67, 59, 45, 50]
         }]
     });
+    $("#device-distribution").highcharts({
+        chart: {
+            plotBackgroundColor: "#a5a5a5",
+            plotBorderWidth: null,
+            plotShadow: false,
+            spacing : [100, 0 , 40, 0]
+
+        },
+        title:{
+            text:"设备分布"
+        },
+        tooltip:{
+            pointFormat: "{point.percentage:.1f}%"
+        },
+        plotOptions:{
+            pie:{
+            allowPointSelect: true,
+            cursor: 'pointer'}
+        },
+        series:[{
+            type:'pie',
+            innerSize:"70%",
+            name:"设备分布",
+            data:[["samsung",78.1],["xiaomi",21.9]],
+            showInLegend:true
+
+        }]
+
+    });
+    $("#system-distribution").highcharts({
+        chart: {
+            plotBackgroundColor: "#a5a5a5",
+            plotBorderWidth: null,
+            plotShadow: false,
+            spacing : [100, 0 , 40, 0]
+
+        },
+        title:{
+            text:"系统分布"
+        },
+        tooltip:{
+            pointFormat: "{point.percentage:.1f}%",
+            shared:false
+        },
+        plotOptions:{
+            pie:{
+                allowPointSelect: true,
+                cursor: 'pointer'}
+        },
+        series:[{
+            type:'pie',
+            innerSize:"60%",
+            name:"系统分布",
+            data:[["4.x",26.1],["5.x",41.7],["6.x",30.1],["others",2.1]],
+            showInLegend:true
+
+        }]
+
+    });
     ko.applyBindings(new crashDataViewModel());
 
 });
