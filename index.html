@@ -114,12 +114,52 @@
                 <span id="crash-id"></span>
                 <span id="crash-info"></span>
             </div>
-            <div class="issue-detail">
-                <p id="issue-stack"></p>
-            </div>
-            <div class="device-distribution">
-                <div id="device-distribution" ></div>
-                <div id="system-distribution" ></div>
+            <div class="issue-detail-wrapper">
+                <div class="issue-detail">
+                    <span style="color: #ffa631">错误堆栈</span>
+                    <p id="issue-stack"></p>
+                </div>
+                <div class="device-distribution">
+                    <div id="device-distribution"></div>
+                    <div id="system-distribution"></div>
+                </div>
+                <button type="button" class="look-into-details"
+                    data-bind="click:lookIntoDetails">查看详细信息</button>
+                <table class="detail-table">
+                    <thead>
+                    <tr>
+                        <th>系统版本</th>
+                        <th>手机品牌</th>
+                        <th>设备型号</th>
+                        <th>剩余内存</th>
+                        <th>剩余存储</th>
+                        <th>网络</th>
+                        <th>Rooted</th>
+                        <th>自定义参数</th>
+                        <th>错误时间</th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach:crashDetail">
+                    <tr>
+                        <td data-bind="text: systemVersion"></td>
+                        <td data-bind="text: phoneBrand"></td>
+                        <td data-bind="text: deviceModel"></td>
+                        <td data-bind="text: memoryRemain"></td>
+                        <td data-bind="text: storageRemain"></td>
+                        <td data-bind="text: netType"></td>
+                        <td data-bind="text: rooted"></td>
+                        <td>查看详情</td>
+                        <td data-bind="text:occurTime"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="comments">
+                <form>
+                    <span>备注</span><br/>
+                    <input placeholder="点击添加备注，至少3个字符。"/><br/>
+                    <button type="button">确定</button>
+                </form>
+                </div>
             </div>
         </div>
     </div>

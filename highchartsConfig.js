@@ -1,9 +1,9 @@
 /**
  * Created by Carlos on 03/08/2017.
  */
+var deviceDistributionChart=null;
+var systemDistributionChart=null;
 $(document).ready(function ($) {
-
-
     $(".highcharts-container").highcharts({
         chart: {
             type: 'column'
@@ -66,15 +66,21 @@ $(document).ready(function ($) {
             allowPointSelect: true,
             cursor: 'pointer'}
         },
+        credits:{
+          enabled:false
+        },
         series:[{
             type:'pie',
-            innerSize:"70%",
+            size:"100%",
+            innerSize:"60%",
             name:"设备分布",
             data:[["samsung",78.1],["xiaomi",21.9]],
             showInLegend:true
 
         }]
 
+    },function (chart) {
+        deviceDistributionChart=chart;
     });
     $("#system-distribution").highcharts({
         chart: {
@@ -96,15 +102,20 @@ $(document).ready(function ($) {
                 allowPointSelect: true,
                 cursor: 'pointer'}
         },
+        credits:{
+            enabled:false
+        },
         series:[{
             type:'pie',
             innerSize:"60%",
+            size:"100%",
             name:"系统分布",
             data:[["4.x",26.1],["5.x",41.7],["6.x",30.1],["others",2.1]],
             showInLegend:true
 
         }]
-
+    },function (chart) {
+        systemDistributionChart=chart;
     });
     ko.applyBindings(new crashDataViewModel());
 

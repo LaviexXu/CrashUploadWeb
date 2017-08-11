@@ -116,7 +116,6 @@ table {
     color: #535353;
     padding: 15px 5px;
     border-bottom: solid 1px #e5e5e5;
-
 }
 
 .crash-info {
@@ -124,7 +123,7 @@ table {
 }
 
 .issue-info {
-    height: 100%;
+   height: 100%;
     width: 100%;
     z-index: 205;
     transition: ease height .35s;
@@ -133,7 +132,6 @@ table {
     top: 0;
     left: 0;
     display: none;
-
 }
 
 .cover {
@@ -152,10 +150,8 @@ table {
     height: 100%;
     background-color: white;
     z-index: 204;
-    max-width: 90%;
     width: 800px;
     margin: auto;
-    overflow: scroll;
 }
 .crash-count {
     display: inline-block;
@@ -187,12 +183,69 @@ table {
     padding: 20px 60px;
     color: white;
 }
-
+.issue-detail-wrapper{
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 65%;
+}
+.issue-detail{
+    margin: 5% 10%;
+}
 .device-distribution #device-distribution{
     display: inline-block;
-    width: 49%;
+    width:49%;
  }
 .device-distribution #system-distribution{
     display: inline-block;
     width: 49%;
 }
+.look-into-details{
+    border-radius: 5px;
+    width: 70%;
+    height: 50px;
+    border:none;
+    background-color: #fa8c35;
+    color:white;
+    margin: auto;
+}
+.detail-table{
+    width: 100%;
+    text-align: center;
+}
+
+.detail-table thead th {
+     background: #ffa631;
+     color: white;
+     border: none;
+     font-size: small;
+     text-align: left;
+     padding: 10px 14px;
+ }
+.detail-table td {
+    color: #535353;
+    padding: 15px 5px;
+    border-bottom: solid 1px #e5e5e5;
+}
+.comments{
+    width: 95%;
+    padding: 10px;
+    height:30%;
+    margin-top: 20px;
+    background-color: #e5e5e5;
+}
+.comments input{
+    width: 100%;
+    height: 25px;
+    margin-top: 15px;
+}
+.comments button{
+    height: 30px;
+    width: 60px;
+    border:none;
+    background-color: #ffa631;
+    color:white;
+    border-radius: 3px;
+    float:right;
+    margin-top: 15px;
+}
+
